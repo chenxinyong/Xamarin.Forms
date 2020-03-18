@@ -379,11 +379,21 @@ namespace Xamarin.Forms.ControlGallery.Android.Tests
 					}
 
 					// Some of the button stuff doesn't work with layout parameters, so we need to parent the control
-					ParentView(control); 
-					var result = getProperty(control);
-					UnparentView(control);
+					var needsParent = control.Parent == null;
 
-					return result;
+					if (needsParent)
+					{
+						ParentView(control);
+					}
+					
+					var result = getProperty(control);
+
+					if (needsParent)
+					{
+						UnparentView(control);
+					}
+
+          return result;
 				}
 			});
 		}
